@@ -1,0 +1,8 @@
+neobundle.vim
+neocomplcache
+neosnippet
+neosnippet-snippets
+unite.vim
+vim-alignta
+vim-template
+vimproc
