@@ -10,13 +10,13 @@ set nocompatible "vimをvi互換モードではなくvimとして使用
 syntax on
 set t_Co=256
 set ambiwidth=double
-""""""""""""""""""""""""""""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""
 " バックアップとスワップ
 set nowritebackup
 set nobackup
 set noswapfile
 
-""""""""""""""""""""""""""""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""
 "colorscheme distinguished
 colorscheme edark
 let g:edark_current_line = 1
@@ -32,12 +32,16 @@ nnoremap ? :set hlsearch<CR>?
 nnoremap * :set hlsearch<CR>*
 nnoremap # :set hlsearch<CR>#
 set infercase  "補完時に大文字小文字を区別しない
+set ignorecase
+set smartcase
 set cursorline "カーソル行を強調表示
 set formatoptions+=mM
-set autoindent
+"set autoindent
+"set cindent
 set smartindent
 set expandtab
 set number
+set list
 set incsearch
 set showcmd
 set showmatch
@@ -46,8 +50,41 @@ set ruler
 set tabstop=4
 set shiftwidth=4
 set textwidth=0
-set listchars=tab:>-,trail:-,nbsp:-,extends:>,precedes:<,
+set listchars=tab:»-,trail:-,nbsp:-,extends:»,precedes:«,eol:↲
 set title " タイトルを変更
+""""""""""""""""""""""""""""""""""""""" 
+" netrw.vim
+" tree view as default
+let g:netrw_liststyle = 3
+let g:netrw_altv = 1
+" absolute width of netrw window
+let g:netrw_winsize = 28
+" do not display info on the top of window
+let g:netrw_banner = 0
+" use the previous window to open file
+let g:netrw_browse_split = 4
+" automatic cd
+set autochdir
+" Toggle VExplore with Ctrl-E
+function! ToggleVExplorer()
+    if exists("t:expl_buf_num")
+        let expl_win_num = bufwinnr(t:expl_buf_num)
+        if expl_win_num != -1
+            let cur_win_nr = winnr()
+            exec expl_win_num . 'wincmd w'
+            close
+            exec cur_win_nr . 'wincmd w'
+            unlet t:expl_buf_num
+        else
+            unlet t:expl_buf_num
+        endif
+    else
+        exec '1wincmd w'
+        Vexplore
+        let t:expl_buf_num = bufnr("%")
+    endif
+endfunction
+map <silent> <C-E> :call ToggleVExplorer()<CR>
 """"""""""""""""""""""""""""""""""""""" 
 " Key binds
 "nnoremap : q:a
